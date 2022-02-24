@@ -8,15 +8,21 @@ const searchButton = () => {
     let inputValue = parseInt(input.value);
     const error = document.getElementById('error');
     if (isNaN(inputValue) || inputValue == '') {
-        error.innerText = 'Please enter a number!'
-        input.value = '';
+        error.innerText = 'Please enter a number!';
+        input.value = "";
+        main.innerHTML = "";
     } else if (inputValue <= 0) {
         error.innerText = 'Please enter a positive number!';
         input.value = '';
+        main.innerHTML = "";
     } else {
+        main.innerHTML = "";
         fetch(`https://deckofcardsapi.com/api/deck/new/draw/?count=${inputValue}`)
             .then(res => res.json())
             .then(data => cardDisplay(data.cards))
+
+        input.value = '';
+        error.innerHTML = '';
     }
 }
 const cardDisplay = cards => {
@@ -29,9 +35,9 @@ const cardDisplay = cards => {
         <div class="card" style="width: 18rem;">
         <img src="${card.image}" class="card-img-top" alt="...">
         <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
+          <h5 class="card-title">${card.suit}</h5>
+          <p class="card-text">${card.code}</p>
+          <button href="#" class="btn btn-success">See Details</button>
         </div>
       </div>
             `;
